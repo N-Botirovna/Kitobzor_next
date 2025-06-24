@@ -1,10 +1,28 @@
+import MainBanner from "@/components/banner/MainBanner";
+import AsNewBooksSection from "@/components/book/AsNewBooksSection";
+import NewBooksSection from "@/components/book/NewBooksSection";
+import FaqSection from "@/components/faq/FaqSection";
+import SiteFooter from "@/components/footer/SiteFooter";
+import { TopHeader } from "@/components/header";
+import NavHeader from "@/components/header/NavbarHeader";
+import { Marquee } from "@/components/magicui/marquee";
+import { MarqueeDemo } from "@/components/posts/Marquee";
+import Posts from "@/components/posts/Posts";
+import ShopsSection from "@/components/shop/ShopSection";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
-    <div className="p-10">
-      <h1 className="text-2xl font-bold mb-4 bg-slate-400 rounded-2xl p-4 border">My App</h1>
-      <Button className="bg-slate-400 rounded-2xl p-4">Salom, Button!</Button>
+    <div>
+
+      <div className="mt-5">
+        <MainBanner />
+      </div>
+      <NewBooksSection />
+      <AsNewBooksSection />
+      <ShopsSection />
+      <Posts />
+      <FaqSection />
     </div>
   );
 }
