@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { MarqueeDemo } from "./Marquee"
+import {  MarqueeDemoVertical } from "./Marquee"
 
 export default function Posts() {
   return (
@@ -7,7 +7,7 @@ export default function Posts() {
         <CardHeader>
           <CardTitle className="text-xl text-center font-bold tracking-tight py-10">📢 Postlar</CardTitle>
         </CardHeader>
-          <MarqueeDemo />
+          <MarqueeDemoVertical />
     </section>
   )
 }

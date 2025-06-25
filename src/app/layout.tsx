@@ -14,22 +14,39 @@ export const metadata = {
   description: "Onlayn kitob do‘koni",
 }
 
+
+import { headers } from "next/headers"
+import { log } from "console"
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const pathname = headers().get("x-invoke-path") || ""
+console.log(pathname);
+
+  const hideLayoutFor = ["/auth", "/404"]
+  const hideLayout = hideLayoutFor.includes(pathname)
+
   return (
     <html lang="uz" suppressHydrationWarning>
       <body className={cn(inter.className, "bg-background text-foreground")}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="container mx-auto">
-            <TopHeader />
-          <NavHeader />
-          <main className="min-h-screen">{children}</main>
-          <SiteFooter />
-          </div>
+          {!hideLayout ? (
+            <>
+              <div className="container mx-auto">
+                <TopHeader />
+                <NavHeader />
+                <main className="min-h-screen">{children}</main>
+              </div>
+              <SiteFooter />
+            </>
+          ) : (
+            children
+          )}
         </ThemeProvider>
       </body>
     </html>
   )
 }
+
 
 
 
