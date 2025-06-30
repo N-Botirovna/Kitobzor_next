@@ -2,62 +2,13 @@
 
 import { useKeenSlider } from "keen-slider/react"
 import BookCard from "./BookCard"
-import { Book } from "./Book"
-
-const books: Book[] = [
-  {
-    id: "1",
-    title: "Kitob nomi 1",
-    description: "Qisqacha tavsif kitob haqida...",
-    image: "https://picsum.photos/200/300?random=1",
-    author: "Muallif A",
-    price: 50000,
-    discountPrice: 40000,
-    region: "toshkent" // Added to match Book type
-  },
-  {
-    id: "2",
-    title: "Kitob nomi 2",
-    description: "Yangi kitoblar orasida mashhur biri",
-    image: "https://picsum.photos/200/300?random=2",
-    author: "Muallif B",
-    price: 60000,
-    discountPrice: null, // Explicit null instead of omitting
-    region: "samarqand"
-  },
-  {
-    id: "3",
-    title: "Kitob nomi 3",
-    description: "Uzoq yillik tajriba asosida yozilgan",
-    image: "https://picsum.photos/200/300?random=3",
-    author: "Muallif C",
-    price: 45000,
-    discountPrice: 39000,
-    region: "andijon"
-  },
-  {
-    id: "4",
-    title: "Kitob nomi 4", // Changed from duplicate title
-    description: "Yangi kitoblar orasida mashhur biri",
-    image: "https://picsum.photos/200/300?random=4",
-    author: "Muallif D", // Changed from duplicate author
-    price: 60000,
-    discountPrice: null,
-    region: "toshkent"
-  },
-  {
-    id: "5",
-    title: "Kitob nomi 5", // Changed from duplicate title
-    description: "Uzoq yillik tajriba asosida yozilgan",
-    image: "https://picsum.photos/200/300?random=5",
-    author: "Muallif E", // Changed from duplicate author
-    price: 45000,
-    discountPrice: 39000,
-    region: "samarqand"
-  },
-]
+import { allBooks } from "@/lib/data/booksData"
 
 export default function AsNewBooksSection() {
+  const asNewBooks = allBooks
+    .filter((book) => book.discountPrice === null && book.price < 60000) // Yangidek deb qabul qilingan shart
+    .slice(0, 10)
+
   const [sliderRef] = useKeenSlider<HTMLDivElement>({
     loop: true,
     mode: "free-snap",
@@ -82,13 +33,13 @@ export default function AsNewBooksSection() {
     <section className="mt-10">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-bold">🆕 Yangidek kitoblar</h2>
-        <a href="/new-books" className="text-sm text-primary hover:underline">
-          Barchasini ko'rish →
+        <a href="/used-books" className="text-sm text-primary hover:underline">
+          Barchasini ko‘rish →
         </a>
       </div>
 
       <div ref={sliderRef} className="keen-slider">
-        {books.map((book) => (
+        {asNewBooks.map((book) => (
           <div key={book.id} className="keen-slider__slide">
             <BookCard book={book} />
           </div>
