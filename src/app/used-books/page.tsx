@@ -7,7 +7,7 @@ import Pagination from "@/components/ui/pagination"
 
 
 const usedBooks = [...Array(40)].map((_, i) => ({
-  id: `u-${i + 1}`,
+  id: `${i + 1}`,
   title: `Yangidek Kitob ${i + 1}`,
   description: "Deyarli yangi holatda, yaxshi saqlangan kitob.",
   image: `https://picsum.photos/400/200?random=${i + 101}`,

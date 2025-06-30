@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import {  MarqueeDemoVertical } from "./Marquee"
+import { MarqueeDemoVertical } from "./Marquee"
 
 export default function Posts() {
   return (

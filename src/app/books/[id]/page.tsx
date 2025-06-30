@@ -1,7 +1,9 @@
-import BookDetail from "@/components/book/BookDetail"
-import BookCard from "@/components/book/BookCard"
+// app/books/[id]/page.tsx
+
 import { notFound } from "next/navigation"
 import { Metadata } from "next"
+import BookDetail from "@/components/book/BookDetail"
+import BookCard from "@/components/book/BookCard"
 
 type Book = {
   id: string
@@ -14,7 +16,7 @@ type Book = {
   region?: string
 }
 
-const allBooks: Book[] = Array.from({ length: 50 }, (_, i) => ({
+const allBooks: Book[] = Array.from({ length: 10 }, (_, i) => ({
   id: `${i + 1}`,
   title: `Kitob ${i + 1}`,
   description: "Ushbu kitob zamonaviy hayot haqida hikoya qiladi...",
@@ -25,21 +27,22 @@ const allBooks: Book[] = Array.from({ length: 50 }, (_, i) => ({
   region: ["toshkent", "samarqand", "andijon"][i % 3],
 }))
 
-// Metadata generator
+export async function generateStaticParams(): Promise<{ id: string }[]> {
+  return allBooks.map((book) => ({ id: book.id }))
+}
+
 export async function generateMetadata({
   params,
 }: {
   params: { id: string }
 }): Promise<Metadata> {
   const book = allBooks.find((b) => b.id === params.id)
-
   if (!book) {
     return {
       title: "Kitob topilmadi",
       description: "So'ralgan kitob mavjud emas",
     }
   }
-
   return {
     title: `${book.title} – ${book.author}`,
     description: book.description,
@@ -49,8 +52,7 @@ export async function generateMetadata({
   }
 }
 
-// Asosiy sahifa komponenti
-export default function BookDetailPage({
+export default async function BookDetailPage({
   params,
 }: {
   params: { id: string }
@@ -79,4 +81,3 @@ export default function BookDetailPage({
     </div>
   )
 }
-
