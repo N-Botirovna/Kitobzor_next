@@ -11,7 +11,7 @@ type Book = {
   author: string
   price: number
   discountPrice: number | null
-  region: string
+  region?: string
 }
 
 const allBooks: Book[] = Array.from({ length: 50 }, (_, i) => ({
@@ -79,3 +79,4 @@ export default function BookDetailPage({
     </div>
   )
 }
+
