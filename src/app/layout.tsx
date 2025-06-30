@@ -32,9 +32,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <>
               <div className="container mx-auto">
                 <TopHeader />
-                <NavHeader />
+              </div>
+              <NavHeader />
+              <div className="container">
                 <main className="min-h-screen">{children}</main>
               </div>
+
               <SiteFooter />
             </>
           ) : (

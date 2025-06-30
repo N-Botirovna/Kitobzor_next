@@ -3,7 +3,6 @@ import BookCard from "@/components/book/BookCard"
 import { notFound } from "next/navigation"
 import { Metadata } from "next"
 
-// Kitob tipini aniqlash
 type Book = {
   id: string
   title: string
@@ -15,14 +14,6 @@ type Book = {
   region: string
 }
 
-// Sahifa parametrlari tipi
-type PageProps = {
-  params: {
-    id: string
-  }
-}
-
-// Fake database - typelar bilan
 const allBooks: Book[] = Array.from({ length: 50 }, (_, i) => ({
   id: `${i + 1}`,
   title: `Kitob ${i + 1}`,
@@ -35,13 +26,17 @@ const allBooks: Book[] = Array.from({ length: 50 }, (_, i) => ({
 }))
 
 // Metadata generator
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string }
+}): Promise<Metadata> {
   const book = allBooks.find((b) => b.id === params.id)
 
   if (!book) {
     return {
       title: "Kitob topilmadi",
-      description: "So'ralgan kitob mavjud emas"
+      description: "So'ralgan kitob mavjud emas",
     }
   }
 
@@ -55,7 +50,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 // Asosiy sahifa komponenti
-export default function BookDetailPage({ params }: PageProps) {
+export default function BookDetailPage({
+  params,
+}: {
+  params: { id: string }
+}) {
   const book = allBooks.find((b) => b.id === params.id)
 
   if (!book) {
@@ -70,7 +69,7 @@ export default function BookDetailPage({ params }: PageProps) {
     <div className="mx-auto px-4 py-10 space-y-14">
       <BookDetail book={book} />
       <div>
-        <h2 className="text-xl font-bold mb-4">🟢 O‘xshash tovarlar</h2>
+        <h2 className="text-xl font-bold mb-4">🟢 O'xshash tovarlar</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {similarBooks.map((b) => (
             <BookCard key={b.id} book={b} />
@@ -80,5 +79,3 @@ export default function BookDetailPage({ params }: PageProps) {
     </div>
   )
 }
-
-
