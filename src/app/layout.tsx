@@ -21,7 +21,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const pathname = headersList.get("x-invoke-path") || ""
   console.log("Pathname:", pathname)
 
-  const hideLayoutFor = ["/auth", "/404"]
+  const hideLayoutFor = ["/auth", "/404", "/profile"]
   const hideLayout = hideLayoutFor.includes(pathname)
 
   return (
