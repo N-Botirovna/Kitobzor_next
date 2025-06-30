@@ -14,13 +14,12 @@ export const metadata = {
   description: "Onlayn kitob do‘koni",
 }
 
-
 import { headers } from "next/headers"
-import { log } from "console"
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const pathname = headers().get("x-invoke-path") || ""
-console.log(pathname);
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const headersList = await headers()
+  const pathname = headersList.get("x-invoke-path") || ""
+  console.log("Pathname:", pathname)
 
   const hideLayoutFor = ["/auth", "/404"]
   const hideLayout = hideLayoutFor.includes(pathname)
@@ -46,18 +45,3 @@ console.log(pathname);
     </html>
   )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

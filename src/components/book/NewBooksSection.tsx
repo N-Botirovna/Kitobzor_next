@@ -1,9 +1,11 @@
+// components/NewBooksSection.tsx
 'use client'
 
 import { useKeenSlider } from "keen-slider/react"
 import BookCard from "./BookCard"
+import { Book } from "./Book"
 
-const books = [
+const books: Book[] = [
   {
     id: "1",
     title: "Kitob nomi 1",
@@ -20,6 +22,7 @@ const books = [
     image: "https://picsum.photos/200/300?random=2",
     author: "Muallif B",
     price: 60000,
+    discountPrice: null,  // null qildim
   },
   {
     id: "3",
@@ -32,49 +35,47 @@ const books = [
   },
   {
     id: "4",
-    title: "Kitob nomi 2",
+    title: "Kitob nomi 4",
     description: "Yangi kitoblar orasida mashhur biri",
-    image: "https://picsum.photos/200/300?random=2",
-    author: "Muallif B",
-    price: 60000,
+    image: "https://picsum.photos/200/300?random=4",
+    author: "Muallif D",
+    price: 55000,
+    discountPrice: null,
   },
   {
     id: "5",
-    title: "Kitob nomi 3",
+    title: "Kitob nomi 5",
     description: "Uzoq yillik tajriba asosida yozilgan",
-    image: "https://picsum.photos/200/300?random=3",
-    author: "Muallif C",
-    price: 45000,
-    discountPrice: 39000,
+    image: "https://picsum.photos/200/300?random=5",
+    author: "Muallif E",
+    price: 48000,
+    discountPrice: 42000,
   },
-  // Yana qo‘shsa bo‘ladi...
 ]
 
 export default function NewBooksSection() {
-  // NewBooksSection.tsx
-const [sliderRef] = useKeenSlider<HTMLDivElement>({
-  loop: true,
-  mode: "free-snap",
-  slides: {
-    perView: 5,
-    spacing: 16,
-  },
-  breakpoints: {
-    "(max-width: 1280px)": {
-      slides: { perView: 4, spacing: 14 },
+  const [sliderRef] = useKeenSlider<HTMLDivElement>({
+    loop: true,
+    mode: "free-snap",
+    slides: {
+      perView: 5,
+      spacing: 16,
     },
-    "(max-width: 1024px)": {
-      slides: { perView: 3, spacing: 12 },
+    breakpoints: {
+      "(max-width: 1280px)": {
+        slides: { perView: 4, spacing: 14 },
+      },
+      "(max-width: 1024px)": {
+        slides: { perView: 3, spacing: 12 },
+      },
+      "(max-width: 640px)": {
+        slides: { perView: 1.2, spacing: 10 },
+      },
     },
-    "(max-width: 640px)": {
-      slides: { perView: 1.2, spacing: 10 },
-    },
-  },
-})
-
+  })
 
   return (
-    <section className="mt-10 ">
+    <section className="mt-10">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-bold">🆕 Yangi kitoblar</h2>
         <a href="/new-books" className="text-sm text-primary hover:underline">

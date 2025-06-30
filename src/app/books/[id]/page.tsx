@@ -1,8 +1,29 @@
 import BookDetail from "@/components/book/BookDetail"
 import BookCard from "@/components/book/BookCard"
 import { notFound } from "next/navigation"
+import { Metadata } from "next"
 
-const allBooks = [...Array(50)].map((_, i) => ({
+// Kitob tipini aniqlash
+type Book = {
+  id: string
+  title: string
+  description: string
+  image: string
+  author: string
+  price: number
+  discountPrice: number | null
+  region: string
+}
+
+// Sahifa parametrlari tipi
+type PageProps = {
+  params: {
+    id: string
+  }
+}
+
+// Fake database - typelar bilan
+const allBooks: Book[] = Array.from({ length: 50 }, (_, i) => ({
   id: `${i + 1}`,
   title: `Kitob ${i + 1}`,
   description: "Ushbu kitob zamonaviy hayot haqida hikoya qiladi...",
@@ -13,34 +34,41 @@ const allBooks = [...Array(50)].map((_, i) => ({
   region: ["toshkent", "samarqand", "andijon"][i % 3],
 }))
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
+// Metadata generator
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const book = allBooks.find((b) => b.id === params.id)
 
+  if (!book) {
+    return {
+      title: "Kitob topilmadi",
+      description: "So'ralgan kitob mavjud emas"
+    }
+  }
+
   return {
-    title: `${book?.title || "Kitob"} – ${book?.author || ""}`,
-    description: book?.description,
+    title: `${book.title} – ${book.author}`,
+    description: book.description,
     openGraph: {
-      images: [book?.image],
+      images: [book.image],
     },
   }
 }
 
-export default function BookDetailPage({ params }: { params: { id: string } }) {
+// Asosiy sahifa komponenti
+export default function BookDetailPage({ params }: PageProps) {
   const book = allBooks.find((b) => b.id === params.id)
 
-  if (!book) return notFound()
+  if (!book) {
+    return notFound()
+  }
 
-  // ⬇️ O‘xshash tovarlar
   const similarBooks = allBooks
     .filter((b) => b.region === book.region && b.id !== book.id)
     .slice(0, 4)
 
   return (
-    <div className=" mx-auto px-4 py-10 space-y-14">
-      {/* Asosiy Book detail */}
+    <div className="mx-auto px-4 py-10 space-y-14">
       <BookDetail book={book} />
-
-      {/* O‘xshash tovarlar */}
       <div>
         <h2 className="text-xl font-bold mb-4">🟢 O‘xshash tovarlar</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -52,4 +80,5 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
     </div>
   )
 }
+
 

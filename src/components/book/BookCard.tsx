@@ -1,19 +1,10 @@
-// app/components/book/BookCard.tsx
+// components/book/BookCard.tsx
 'use client'
 
 import { Heart, ShoppingCart, MessageSquare } from "lucide-react"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-
-type Book = {
-  id: string
-  title: string
-  description: string
-  image: string
-  author: string
-  price: number
-  discountPrice?: number
-}
+import { Book } from "./Book"
 
 export default function BookCard({ book }: { book: Book }) {
   return (
@@ -35,11 +26,15 @@ export default function BookCard({ book }: { book: Book }) {
           <div className="mt-3">
             {book.discountPrice ? (
               <div className="flex gap-2 items-center">
-                <span className="line-through text-sm text-muted-foreground">{book.price} so‘m</span>
-                <span className="text-primary font-bold">{book.discountPrice} so‘m</span>
+                <span className="line-through text-sm text-muted-foreground">
+                  {book.price} so'm
+                </span>
+                <span className="text-primary font-bold">
+                  {book.discountPrice} so'm
+                </span>
               </div>
             ) : (
-              <span className="text-primary font-bold">{book.price} so‘m</span>
+              <span className="text-primary font-bold">{book.price} so'm</span>
             )}
           </div>
         </CardContent>
