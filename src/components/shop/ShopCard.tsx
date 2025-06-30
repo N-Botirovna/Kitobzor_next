@@ -9,7 +9,7 @@ type Shop = {
   name: string
   image: string
   address: string
-  phone: string
+  phone?: string
 }
 
 export default function ShopCard({ shop }: { shop: Shop }) {
