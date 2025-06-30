@@ -4,28 +4,7 @@ import { notFound } from "next/navigation"
 import { Metadata } from "next"
 import BookDetail from "@/components/book/BookDetail"
 import BookCard from "@/components/book/BookCard"
-
-type Book = {
-  id: string
-  title: string
-  description: string
-  image: string
-  author: string
-  price: number
-  discountPrice: number | null
-  region?: string
-}
-
-const allBooks: Book[] = Array.from({ length: 10 }, (_, i) => ({
-  id: `${i + 1}`,
-  title: `Kitob ${i + 1}`,
-  description: "Ushbu kitob zamonaviy hayot haqida hikoya qiladi...",
-  image: `https://picsum.photos/400/200?random=${i + 1}`,
-  author: ["Ali", "Vali", "Guli", "Murod"][i % 4],
-  price: 20000 + i * 1000,
-  discountPrice: i % 5 === 0 ? 15000 + i * 800 : null,
-  region: ["toshkent", "samarqand", "andijon"][i % 3],
-}))
+import { allBooks, Book } from "@/lib/data/booksData" // 🔥 E'tibor bering
 
 export async function generateStaticParams(): Promise<{ id: string }[]> {
   return allBooks.map((book) => ({ id: book.id }))

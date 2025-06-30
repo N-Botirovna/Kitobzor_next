@@ -36,7 +36,7 @@ export default function SiteFooter() {
       <Separator className="my-4" />
 
       {/* Bottom */}
-      <div className="max-w-7xl mx-auto px-4 md:px-8 pb-6 flex flex-col md:flex-row items-center justify-between text-xs text-muted-foreground">
+      <div className=" mx-auto px-4 md:px-8 pb-6 flex flex-col md:flex-row items-center justify-between text-xs text-muted-foreground">
         <p>© 2025 Kitobzor. Barcha huquqlar himoyalangan.</p>
         <div className="flex gap-3 mt-2 md:mt-0">
           <a href="https://facebook.com" target="_blank"><Facebook size={16} /></a>

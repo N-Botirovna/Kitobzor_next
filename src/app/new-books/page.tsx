@@ -4,16 +4,7 @@ import { useState } from "react"
 import BookCard from "@/components/book/BookCard"
 import Pagination from "@/components/ui/pagination"
 import BookFilters from "@/components/filter/BookFilter"
-
-const allBooks = [...Array(50)].map((_, i) => ({
-  id: `${i + 1}`,
-  title: `Kitob ${i + 1}`,
-  description: "Lorem ipsum dolor sit amet.",
-  image: `https://picsum.photos/400/200?random=${i + 1}`,
-  author: ["Ali", "Vali", "Guli", "Murod"][i % 4],
-  price: 20000 + i * 1000,
-  region: ["toshkent", "samarqand", "andijon"][i % 3],
-}))
+import { allBooks } from "@/lib/data/booksData"
 
 export default function NewBooksPage() {
   const [filters, setFilters] = useState({ name: "", author: "", region: "", price: "" })
@@ -33,7 +24,7 @@ export default function NewBooksPage() {
   const totalPages = Math.ceil(filtered.length / perPage)
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-10">
+    <div className=" mx-auto px-4 py-10">
       <h1 className="text-2xl font-bold mb-6">🆕 Yangi kitoblar</h1>
 
       <BookFilters filters={filters} setFilters={setFilters} />

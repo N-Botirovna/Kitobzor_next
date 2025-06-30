@@ -4,25 +4,17 @@ import { useState } from "react"
 import ShopCard from "@/components/shop/ShopCard"
 import Pagination from "@/components/ui/pagination"
 import ShopFilters from "@/components/filter/ShopFilters"
-
-
-const allShops = [...Array(24)].map((_, i) => ({
-  id: `${i + 1}`,
-  name: `Do‘kon ${i + 1}`,
-  address: ["Toshkent", "Samarqand", "Andijon"][i % 3],
-  description: "Turli janrdagi kitoblar mavjud. Eng yaxshi narxlar.",
-  image: `https://picsum.photos/400/200?random=${200 + i}`,
-}))
+import { shops } from "@/lib/data/shopsData"
 
 export default function ShopsPage() {
   const [filters, setFilters] = useState({ name: "", region: "" })
   const [page, setPage] = useState(1)
   const perPage = 8
 
-  const filtered = allShops.filter(
+  const filtered = shops.filter(
     (shop) =>
       shop.name.toLowerCase().includes(filters.name.toLowerCase()) &&
-      shop.address.toLowerCase().includes(filters.region.toLowerCase())
+      shop.region_name.toLowerCase().includes(filters.region.toLowerCase())
   )
 
   const paginated = filtered.slice((page - 1) * perPage, page * perPage)
