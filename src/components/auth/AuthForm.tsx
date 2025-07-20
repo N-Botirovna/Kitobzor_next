@@ -91,7 +91,7 @@ export default function LoginPage() {
         </p>
 
         <a
-          href="https://t.me/kitobzor_uz_bot"
+          href="https://t.me/kitobzoruz_bot"
           target="_blank"
           rel="noopener noreferrer"
           className="bg-blue-500 text-white text-center py-3 rounded mb-6 hover:bg-blue-600 transition"
