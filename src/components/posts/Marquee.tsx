@@ -1,31 +1,42 @@
-
 import { cn } from "@/lib/utils";
 import { Marquee } from "../magicui/marquee";
- 
+
 const reviews = [
   {
-    name: "Jack",
-    username: "@jack",
-    body: "I've never seen anything like this before. It's amazing. I love it.",
-    img: "https://avatar.vercel.sh/jack",
+    name: "Dilshod",
+    username: "@dilshod_uz",
+    body: "Kitobzor orqali kerakli kitobimni topdim! Narxlar solishtirilgani juda qulay. Endi doim shu yerdan qidiraman.",
+    img: "https://avatar.vercel.sh/dilshod",
   },
   {
-    name: "Jill",
-    username: "@jill",
-    body: "I don't know what to say. I'm speechless. This is amazing.",
-    img: "https://avatar.vercel.sh/jill",
+    name: "Ziyoda",
+    username: "@ziyoda_bahriddinova",
+    body: "Sayt juda sodda va tushunarli. Menga yaqin do‘konda borligini ko‘rib hayron qoldim. Zo‘r loyiha!",
+    img: "https://avatar.vercel.sh/ziyoda",
   },
   {
-    name: "John",
-    username: "@john",
-    body: "I'm at a loss for words. This is amazing. I love it.",
-    img: "https://avatar.vercel.sh/john",
+    name: "Rustam",
+    username: "@rustamdev",
+    body: "Bu platforma vaqtimni tejaydi. Kitoblar holati va narxi ko‘rsatilgani ayni muddao. Rahmat!",
+    img: "https://avatar.vercel.sh/rustam",
+  },
+  {
+    name: "Gulbahor",
+    username: "@gulbaxor1101",
+    body: "Yangidek kitoblarni topib, arzon narxda xarid qildim. Kitobxonlar uchun ayni kerakli servis!",
+    img: "https://avatar.vercel.sh/gulbahor",
+  },
+  {
+    name: "Javohir",
+    username: "@javohir_q",
+    body: "Tavsiya etilgan kitoblar ro‘yxati ancha foydali. Endi nima o‘qishni bilmay qolsam, shu yerga kiraman.",
+    img: "https://avatar.vercel.sh/javohir",
   },
 ];
- 
+
 const firstRow = reviews.slice(0, reviews.length / 2);
 const secondRow = reviews.slice(reviews.length / 2);
- 
+
 const ReviewCard = ({
   img,
   name,
@@ -44,7 +55,7 @@ const ReviewCard = ({
         // light styles
         "border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]",
         // dark styles
-        "dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]",
+        "dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]"
       )}
     >
       <div className="flex flex-row items-center gap-2">
@@ -60,7 +71,7 @@ const ReviewCard = ({
     </figure>
   );
 };
- 
+
 export function MarqueeDemoVertical() {
   return (
     <div className="relative flex h-[500px] w-full flex-row items-center justify-center overflow-hidden">
@@ -74,7 +85,7 @@ export function MarqueeDemoVertical() {
           <ReviewCard key={review.username} {...review} />
         ))}
       </Marquee>
-            <Marquee pauseOnHover vertical className="[--duration:20s]">
+      <Marquee pauseOnHover vertical className="[--duration:20s]">
         {firstRow.map((review) => (
           <ReviewCard key={review.username} {...review} />
         ))}

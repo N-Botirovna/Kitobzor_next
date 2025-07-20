@@ -4,7 +4,7 @@ import { Book } from "./Book";
 
 export default function BookDetail({ book }: { book: Book }) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 container ">
       <div className="flex flex-col md:flex-row gap-8">
         <img
           src={book.image}

@@ -4,19 +4,25 @@ import { Globe, Heart, ShoppingCart, Phone, Search, User } from 'lucide-react'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import { useState } from 'react'
-import Link from 'next/link'
+import Link from '../../../node_modules/next/link'
+import Image from '../../../node_modules/next/image'
 
 export default function TopHeader() {
   const [showLangs, setShowLangs] = useState(false)
 
   return (
-    <div className="relative flex items-center justify-between gap-4 px-6 py-3 border-b bg-white">
-      <div className="text-xl font-bold">BookStore</div>
+    <div className="relative  w-full  flex items-center justify-between gap-4 px-6 py-3 border-[#f2543f] bg-white">
+      <div className="text-xl font-bold">
+        <Image src={"/images/logo_kitobzor.png"}
+          alt="My cool image"
+          height={85}
+          width={75} />
+      </div>
 
       <div className="flex-1 max-w-xl">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
-          <Input placeholder="Qidiruv..." className="pl-10" />
+          <Input placeholder="Qidiruv..." className="pl-12 rounded-2xl py-4" />
         </div>
       </div>
 

@@ -2,50 +2,73 @@
 
 import { useKeenSlider } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css"
-
-const slides = [
-  {
-    img: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1600&q=80",
-    title: "Yangi kelgan bestsellerlar",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=1600&q=80",
-    title: "Chegirmadagi kitoblar",
-  },
-  {
-    img: "https://img.freepik.com/free-psd/world-book-day-celebration-leaderboard-banner-template_23-2151324326.jpg?ga=GA1.1.746369927.1750755296&semt=ais_hybrid&w=740",
-    title: "Har oy yangi yangiliklar",
-  },
-]
+import { useQuery } from "@tanstack/react-query"
+import { useEffect } from "react"
+import { getBanners } from "@/features/auth/api"
 
 export default function MainBanner() {
-  const [sliderRef] = useKeenSlider<HTMLDivElement>({
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['banners'],
+    queryFn: () => getBanners(3, 0),
+  })
+
+  const banners = data?.data?.result || [] // API natijasini soddalashtirib olamiz
+
+  const [sliderRef, slider] = useKeenSlider<HTMLDivElement>({
     loop: true,
-    slideChanged() {},
-    // duration: 1000,  
     renderMode: "performance",
     drag: true,
     slides: { perView: 1 },
-    created(s) {
-      setInterval(() => {
-        s.next()
-      }, 4000)
-    },
   })
 
+  useEffect(() => {
+    if (slider && banners.length > 0) {
+      const interval = setInterval(() => {
+        slider.current?.next()
+      }, 4000)
+      return () => clearInterval(interval)
+    }
+  }, [slider, banners])
+
+  if (isLoading) {
+    return <div className="h-[66vh] flex items-center justify-center text-gray-500 text-lg">Banners yuklanmoqda...</div>
+  }
+
+  if (error) {
+    return <div className="h-[66vh] flex items-center justify-center text-red-500 text-lg">Xatolik yuz berdi. Qayta urinib ko‘ring.</div>
+  }
+
+  if (banners.length === 0) {
+    return <div className="h-[66vh] flex items-center justify-center text-gray-400 text-lg">Hozircha bannerlar mavjud emas</div>
+  }
+
   return (
-    <div ref={sliderRef} className="keen-slider mt-2">
-      {slides.map((slide, index) => (
-        <div key={index} className="keen-slider__slide relative">
-          <img
-            src={slide.img}
-            alt={`Banner ${index}`}
-            className="w-full h-[300px] object-cover rounded-lg"
-          />
-          <div className="absolute bottom-4 left-4 bg-black/60 text-white px-4 py-2 rounded">
-            {slide.title}
-          </div>
-        </div>
+    <div ref={sliderRef} className="keen-slider  h-[66vh] rounded-xl overflow-hidden">
+      {banners.map((banner) => (
+      <div
+      key={banner.id}
+      className="keen-slider__slide relative h-[65vh] w-full rounded-xl overflow-hidden"
+    >
+      {/* Background image as CSS background */}
+      <div
+        className="absolute inset-0 bg-no-repeat bg-center bg-cover"
+        style={{
+          backgroundImage: `url(${banner.picture})`,
+          backgroundSize: 'cover', // Ensures full coverage
+          backgroundPosition: 'bottom',
+        }}
+      />
+    
+      {/* Optional dark gradient overlay for readability */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/50 to-transparent" />
+    
+      {/* Centered text - slightly left-aligned */}
+      <div className="absolute top-1/3 w-2/3 left-8 -translate-y-1/2 text-white text-2xl md:text-4xl font-bold max-w-[70%] drop-shadow-xl">
+        {banner.title}
+      </div>
+    </div>
+      
+      
       ))}
     </div>
   )
