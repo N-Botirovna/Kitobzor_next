@@ -1,14 +1,23 @@
-"use client"
+"use client";
+
 import { useState } from "react";
 import { useVerifyCode } from "@/features/auth/hooks";
-import Image from "../../../node_modules/next/image";
 import { useRouter } from "../../../node_modules/next/navigation";
+import Image from "../../../node_modules/next/image";
+
+interface LoginResponse {
+  data?: {
+    access_token: string;
+    // Boshqa response fieldlari...
+  };
+  headers?: any;
+}
 
 export default function LoginPage() {
   const [phone, setPhone] = useState("");
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const { mutate: verify, isPending, isError, error } = useVerifyCode();
-  const router = useRouter  ();
+  const router = useRouter();
 
   const isPhoneValid = /^\+998\d{9}$/.test(phone);
   const isCodeComplete = code.every((digit) => digit.length === 1);
@@ -35,30 +44,26 @@ export default function LoginPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!isFormValid) return;
-    
+
     const fullCode = code.join("");
-    console.log('Form submitted with:', { phone, code: fullCode }); // 1. Form ma'lumotlarini ko'rish
-    
+    console.log("Form submitted with:", { phone, code: fullCode });
+
     verify(
       { phone, code: fullCode },
       {
-        onSuccess: (data) => {
-          console.log('Login success! Response data:', data); // 2. Muvaffaqiyatli javob
-          console.log('Response headers:', data.headers);           
-          console.log('Token:', data.data?.access_token); 
-          
-          if (data.data?.access_token) {
-            localStorage.setItem("token", data.data.access_token);; // 5. Token saqlanganligi
+        onSuccess: (data: LoginResponse) => {
+          console.log("Login success! Response data:", data);
+
+          if (data?.data?.access_token) {
+            localStorage.setItem("token", data.data.access_token);
+            router.push("/");
           }
-          
-          router.push("/");
         },
-        onError: (error) => {
-          console.error("Login error details:", { // 6. Batafsil xato ma'lumoti
+        onError: (error: any) => {
+          console.error("Login error details:", {
             message: error.message,
-            response: error.response,
-            request: error.request,
-            config: error.config
+            response: error.response?.data,
+            status: error.response?.status,
           });
         },
       }
@@ -96,7 +101,9 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit}>
           {/* Phone input */}
-          <label className="mb-2 block text-sm font-medium">Telefon raqam</label>
+          <label className="mb-2 block text-sm font-medium">
+            Telefon raqam
+          </label>
           <input
             type="tel"
             value={phone}
@@ -106,7 +113,9 @@ export default function LoginPage() {
           />
 
           {/* OTP code input */}
-          <label className="mb-2 block text-sm font-medium">Tasdiqlash kodi</label>
+          <label className="mb-2 block text-sm font-medium">
+            Tasdiqlash kodi
+          </label>
           <div className="flex justify-between gap-2 mb-6">
             {code.map((digit, index) => (
               <div key={index} className="relative">
@@ -119,7 +128,9 @@ export default function LoginPage() {
                   className="w-12 h-12 border-2 text-center text-xl rounded-md focus:outline-none focus:border-blue-500 transition"
                 />
                 {index === 2 && (
-                  <span className="absolute -right-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">-</span>
+                  <span className="absolute -right-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">
+                    -
+                  </span>
                 )}
               </div>
             ))}
@@ -139,7 +150,8 @@ export default function LoginPage() {
 
           {isError && (
             <div className="mt-4 text-red-500 text-sm">
-              {error.response?.data?.message || "Xatolik yuz berdi, qayta urinib ko'ring"}
+              {(error as any)?.response?.data?.message ||
+                "Xatolik yuz berdi, qayta urinib ko'ring"}
             </div>
           )}
         </form>

@@ -1,6 +1,6 @@
 // app/components/header/NavHeader.tsx
 
-'use client'
+"use client";
 
 import Link from "../../../node_modules/next/link";
 
@@ -12,6 +12,8 @@ const NavbarHeader = () => {
     { name: "Yangidek Kitob lar", href: "/used-books" },
     { name: "Do’konlar", href: "/shops" },
     { name: "Aksiya", href: "/sales" },
+    { name: "FAQ", href: "/" },
+    { name: "Postlar", href: "/" },
   ];
 
   return (
@@ -40,4 +42,3 @@ const NavbarHeader = () => {
 };
 
 export default NavbarHeader;
-

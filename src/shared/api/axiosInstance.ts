@@ -1,4 +1,3 @@
-// src/api/axios.ts
 import axios from "axios";
 
 // 1. Asosiy API konfiguratsiyasi
@@ -8,15 +7,18 @@ const api = axios.create({
     "Content-Type": "application/json",
     Accept: "application/json",
   },
-  timeout: 10000, // 10 soniya timeout
+  timeout: 10000,
 });
-const token = localStorage.getItem("token");
-console.log("Authorization header:", `Bearer ${token}`);
 
-// 2. So'rov oldidan interceptor
+// 2. Faqat brauzerda ishlaydigan kodni ichkariga ko‘chiring
+if (typeof window !== "undefined") {
+  const token = localStorage.getItem("token");
+  console.log("Authorization header:", `Bearer ${token}`);
+}
+
+// 3. So‘rov oldidan interceptor
 api.interceptors.request.use(
   (config) => {
-    // Faqat browser muhitida ishlaydigan kod
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("token");
       if (token) {
@@ -25,22 +27,16 @@ api.interceptors.request.use(
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
-// 3. Javob uchun interceptor
+// 4. Javobni tutuvchi interceptor
 api.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   (error) => {
-    // Xatolikni qayta ishlash
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          // Auth xatosi
           console.error("Kirish amalga oshmadi");
           break;
         case 404:
@@ -53,11 +49,9 @@ api.interceptors.response.use(
           console.error("Noma'lum xato");
       }
     } else if (error.request) {
-      // So'rov yuborildi, lekin javob kelmadi
       console.error("Javob kelmadi:", error.request);
     } else {
-      // So'rov yuborishda xato
-      console.error("So'rov yuborishda xato:", error.message);
+      console.error("So‘rov yuborishda xato:", error.message);
     }
 
     return Promise.reject(error);

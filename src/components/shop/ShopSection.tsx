@@ -20,9 +20,14 @@ export default function ShopsSection() {
           <ShopCard key={shop.id} shop={shop} />
         ))}
       </div>
-      <a href="/shops" className="text-sm text-primary hover:underline">
-        Barchasini ko‘rish →
-      </a>
+      <div className="mt-8 text-center">
+        <a
+          href="/shops"
+          className="inline-block text-sm font-medium text-orange-600 hover:underline mb-4 mt-3 border-[#d74532] py-5"
+        >
+          Barchasini ko‘rish →
+        </a>
+      </div>
     </section>
   );
 }
