@@ -14,7 +14,7 @@ interface LoginResponse {
 }
 
 export default function LoginPage() {
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState("+998");
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const { mutate: verify, isPending, isError, error } = useVerifyCode();
   const router = useRouter();
@@ -40,7 +40,14 @@ export default function LoginPage() {
       nextInput?.focus();
     }
   };
-
+const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
+    if (e.code === "Backspace" && e.currentTarget.value && index > 0) {
+        const prevInput = document.getElementById(`code-${index - 1}`);
+        prevInput?.focus();
+    }
+    console.log("workiiing");
+    
+};
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!isFormValid) return;
@@ -72,7 +79,6 @@ export default function LoginPage() {
 
   return (
     <div className="flex h-screen w-full bg-white">
-      {/* Left side - Image */}
       <div className="w-[62%] relative hidden md:block">
         <Image
           src="/images/enter.png"
@@ -82,8 +88,6 @@ export default function LoginPage() {
           priority
         />
       </div>
-
-      {/* Right side - Login */}
       <div className="w-full md:w-[38%] flex flex-col justify-center px-12 md:px-16">
         <h1 className="text-3xl font-bold mb-2">Kitobzorga xush kelibsiz!</h1>
         <p className="mb-12 text-gray-400">
@@ -100,7 +104,6 @@ export default function LoginPage() {
         </a>
 
         <form onSubmit={handleSubmit}>
-          {/* Phone input */}
           <label className="mb-2 block text-sm font-medium">
             Telefon raqam
           </label>
@@ -111,8 +114,6 @@ export default function LoginPage() {
             className={`border px-4 py-2 w-full mb-6 rounded focus:outline-none transition focus:ring-2 focus:ring-blue-300`}
             placeholder="+998901234567"
           />
-
-          {/* OTP code input */}
           <label className="mb-2 block text-sm font-medium">
             Tasdiqlash kodi
           </label>
@@ -125,11 +126,12 @@ export default function LoginPage() {
                   maxLength={1}
                   value={digit}
                   onChange={(e) => handleCodeChange(index, e.target.value)}
+                  onKeyDown={(e) => handleKeyDown(e, index)}
                   className="w-12 h-12 border-2 text-center text-xl rounded-md focus:outline-none focus:border-blue-500 transition"
                 />
                 {index === 2 && (
-                  <span className="absolute -right-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">
-                    -
+                  <span className="absolute -right-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg mx-2">
+                     - 
                   </span>
                 )}
               </div>

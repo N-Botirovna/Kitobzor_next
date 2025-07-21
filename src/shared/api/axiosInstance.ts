@@ -1,6 +1,5 @@
 import axios from "axios";
 
-// 1. Asosiy API konfiguratsiyasi
 const api = axios.create({
   baseURL: "http://38.242.217.124:8000/api/v1",
   headers: {
@@ -10,13 +9,11 @@ const api = axios.create({
   timeout: 10000,
 });
 
-// 2. Faqat brauzerda ishlaydigan kodni ichkariga ko‘chiring
 if (typeof window !== "undefined") {
   const token = localStorage.getItem("token");
   console.log("Authorization header:", `Bearer ${token}`);
 }
 
-// 3. So‘rov oldidan interceptor
 api.interceptors.request.use(
   (config) => {
     if (typeof window !== "undefined") {
@@ -30,7 +27,6 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// 4. Javobni tutuvchi interceptor
 api.interceptors.response.use(
   (response) => response,
   (error) => {
