@@ -11,3 +11,10 @@ export const getBanners = (limit: number, offset: number) =>
       offset,
     },
   });
+export const getCategories = (limit: number, offset: number) =>
+  api.get("/book/categories/", {
+    params: {
+      limit,
+      offset,
+    },
+  });
