@@ -4,7 +4,6 @@
 import { Heart, ShoppingCart, MessageSquare } from "lucide-react"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Book } from "./Book"
 
 export default function BookCard({ book }: { book: Book }) {
   return (

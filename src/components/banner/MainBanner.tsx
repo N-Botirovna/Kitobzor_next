@@ -4,13 +4,12 @@ import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { getBanners } from "@/features/auth/api";
+import { useBanners } from "@/features/base/hooks";
 
 interface Banner {
   id: number;
   title: string;
   picture: string;
-  // Qo'shimcha propertylar bo'lsa shu yerga qo'shing
 }
 
 interface ApiResponse {
@@ -22,10 +21,7 @@ interface ApiResponse {
 }
 
 export default function MainBanner() {
-  const { data, isLoading, error } = useQuery<ApiResponse>({
-    queryKey: ["banners"],
-    queryFn: () => getBanners(3, 0),
-  });
+  const { data, isLoading, error } = useBanners(3, 0)
 
   const banners: Banner[] = data?.data?.result || [];
 
@@ -47,7 +43,7 @@ export default function MainBanner() {
 
   if (isLoading) {
     return (
-      <div className="h-[66vh] flex items-center justify-center text-gray-500 text-lg">
+      <div className=" flex items-center justify-center text-gray-500 text-lg">
         Banners yuklanmoqda...
       </div>
     );
@@ -55,7 +51,7 @@ export default function MainBanner() {
 
   if (error) {
     return (
-      <div className="h-[66vh] flex items-center justify-center text-red-500 text-lg">
+      <div className=" flex items-center justify-center text-red-500 text-lg">
         Xatolik yuz berdi. Qayta urinib ko‘ring.
       </div>
     );
@@ -63,7 +59,7 @@ export default function MainBanner() {
 
   if (banners.length === 0) {
     return (
-      <div className="h-[66vh] flex items-center justify-center text-gray-400 text-lg">
+      <div className=" flex items-center justify-center text-gray-400 text-lg">
         Hozircha bannerlar mavjud emas
       </div>
     );
@@ -72,12 +68,12 @@ export default function MainBanner() {
   return (
     <div
       ref={sliderRef}
-      className="keen-slider h-[66vh] rounded-xl overflow-hidden"
+      className="keen-slider h-[35vh]  rounded-xl overflow-hidden"
     >
       {banners.map((banner) => (
         <div
           key={banner.id}
-          className="keen-slider__slide relative h-[65vh] w-full rounded-xl overflow-hidden"
+          className="keen-slider__slide relative  w-full rounded-xl overflow-hidden"
         >
           <div
             className="absolute inset-0 bg-no-repeat bg-center bg-cover"
