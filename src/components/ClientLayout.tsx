@@ -31,7 +31,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       {!hideLayout ? (
         <>
-          <div className="h-[33vh]">
+          <div className="">
             <div className="container mx-auto">
               <TopHeader />
             </div>
