@@ -5,12 +5,19 @@ import { useRef, useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import BookCard from "./BookCard";
 import { allBooks } from "@/lib/data/booksData";
+import { BookListPayload } from "@/features/books/api";
+import { useBooks } from "@/features/books/hooks";
 
 export default function AsNewBooksSection() {
-  const asNewBooks = allBooks
-    .filter((book) => book.discountPrice === null && book.price < 60000)
-    .slice(0, 10);
-
+  const params = {
+    limit: 10,
+    offset: 0,
+    owner_type: "user"
+  } satisfies BookListPayload;
+    const { data, isLoading, error } = useBooks(params);
+    console.log(data?.data?.result);
+    
+  const asNewBooks = data?.data?.result
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     loop: true,
     mode: "free-snap",
@@ -82,10 +89,9 @@ export default function AsNewBooksSection() {
         </div>
       </div>
 
-      {/* Slider */}
-      {asNewBooks.length > 0 ? (
+      {asNewBooks?.length > 0 ? (
         <div ref={sliderRef} className="keen-slider">
-          {asNewBooks.map((book) => (
+          {asNewBooks.map((book:any) => (
             <div key={book.id} className="keen-slider__slide">
               <BookCard book={book} />
             </div>

@@ -8,11 +8,11 @@ export default function BookDetail({ book }: { book: Book }) {
       <div className="flex flex-col md:flex-row gap-8">
         <img
           src={book.image}
-          alt={book.title}
+          alt={book.name}
           className="w-full md:w-1/3 h-auto rounded-lg object-cover"
         />
         <div className="flex-1 space-y-4">
-          <h1 className="text-3xl font-bold">{book.title}</h1>
+          <h1 className="text-3xl font-bold">{book.name}</h1>
           <p className="text-lg text-muted-foreground">{book.author}</p>
           
           <div className="flex items-center gap-4">

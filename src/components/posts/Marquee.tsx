@@ -1,41 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Marquee } from "../magicui/marquee";
-
-const reviews = [
-  {
-    name: "Dilshod",
-    username: "@dilshod_uz",
-    body: "Kitobzor orqali kerakli kitobimni topdim! Narxlar solishtirilgani juda qulay. Endi doim shu yerdan qidiraman.",
-    img: "https://avatar.vercel.sh/dilshod",
-  },
-  {
-    name: "Ziyoda",
-    username: "@ziyoda_bahriddinova",
-    body: "Sayt juda sodda va tushunarli. Menga yaqin do‘konda borligini ko‘rib hayron qoldim. Zo‘r loyiha!",
-    img: "https://avatar.vercel.sh/ziyoda",
-  },
-  {
-    name: "Rustam",
-    username: "@rustamdev",
-    body: "Bu platforma vaqtimni tejaydi. Kitoblar holati va narxi ko‘rsatilgani ayni muddao. Rahmat!",
-    img: "https://avatar.vercel.sh/rustam",
-  },
-  {
-    name: "Gulbahor",
-    username: "@gulbaxor1101",
-    body: "Yangidek kitoblarni topib, arzon narxda xarid qildim. Kitobxonlar uchun ayni kerakli servis!",
-    img: "https://avatar.vercel.sh/gulbahor",
-  },
-  {
-    name: "Javohir",
-    username: "@javohir_q",
-    body: "Tavsiya etilgan kitoblar ro‘yxati ancha foydali. Endi nima o‘qishni bilmay qolsam, shu yerga kiraman.",
-    img: "https://avatar.vercel.sh/javohir",
-  },
-];
-
-const firstRow = reviews.slice(0, reviews.length / 2);
-const secondRow = reviews.slice(reviews.length / 2);
+import { useBooks } from "@/features/books/hooks";
+import { useBookComments } from "@/features/base/hooks";
 
 const ReviewCard = ({
   img,
@@ -73,20 +39,32 @@ const ReviewCard = ({
 };
 
 export function MarqueeDemoVertical() {
+  const { data, isLoading, error } = useBookComments({
+    limit: 12,
+    offset: 0,
+  });
+
+  if (isLoading) return <p>Yuklanmoqda...</p>;
+  if (error || !data?.data?.result) return <p>Xatolik yuz berdi</p>;
+
+  const reviews = data?.data?.result;
+  const firstRow = reviews.slice(0, reviews.length / 2);
+  const secondRow = reviews.slice(reviews.length / 2);
+
   return (
     <div className="relative flex h-[500px] w-full flex-row items-center justify-center overflow-hidden">
       <Marquee pauseOnHover vertical className="[--duration:20s]">
-        {firstRow.map((review) => (
+        {firstRow.map((review:any) => (
           <ReviewCard key={review.username} {...review} />
         ))}
       </Marquee>
       <Marquee reverse pauseOnHover vertical className="[--duration:20s]">
-        {secondRow.map((review) => (
+        {secondRow.map((review:any) => (
           <ReviewCard key={review.username} {...review} />
         ))}
       </Marquee>
       <Marquee pauseOnHover vertical className="[--duration:20s]">
-        {firstRow.map((review) => (
+        {firstRow.map((review:any) => (
           <ReviewCard key={review.username} {...review} />
         ))}
       </Marquee>

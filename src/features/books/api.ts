@@ -6,7 +6,7 @@ export interface BookListPayload {
   cover_type?: "hard" | "soft";
   exclude?: string;     
   id?: number;
-  is_active?: string; 
+  is_active?: boolean; 
   limit?: number;
   offset?: number;
   ordering?: "id" | "created_at" | "updated_at" | "price" | "publication_year" ;
@@ -18,6 +18,8 @@ export interface BookListPayload {
   shop?: number;
   type?: "gift" | "exchange" | "seller";
 }
+export const getBookList = (params: BookListPayload) =>
+  api.get("/book/list", { params }); 
 export const getCategories = (limit: number, offset: number) =>
   api.get("/book/categories/", {
     params: {
@@ -25,5 +27,5 @@ export const getCategories = (limit: number, offset: number) =>
       offset,
     },
   });
-  export const getBookList = (payload: BookListPayload) =>
-    api.post("/book/list", payload);
+
+

@@ -5,10 +5,18 @@ import { useState } from "react";
 import BookCard from "./BookCard";
 import { allBooks } from "@/lib/data/booksData";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useBooks } from "@/features/books/hooks";
+import { BookListPayload } from "@/features/books/api";
 
 export default function NewBooksSection() {
-  const newBooks = allBooks.slice(0, 10);
-
+  // const newBooks = allBooks.slice(0, 10);
+  const params = {
+  limit: 10,
+  offset: 0,
+  owner_type: "shop"
+} satisfies BookListPayload;
+  const { data, isLoading, error } = useBooks(params);
+const newBooks = data?.data?.result;
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     loop: true,
     mode: "free-snap",
@@ -17,6 +25,9 @@ export default function NewBooksSection() {
       spacing: 16,
     },
     breakpoints: {
+      "(max-width: 1980px)": {
+        slides: { perView: 5, spacing: 16 },
+      },
       "(max-width: 1280px)": {
         slides: { perView: 4, spacing: 14 },
       },
@@ -84,7 +95,7 @@ export default function NewBooksSection() {
 
       {/* Slider */}
       <div ref={sliderRef} className="keen-slider">
-        {newBooks.map((book) => (
+        {newBooks?.map((book:any) => (
           <div key={book.id} className="keen-slider__slide">
             <BookCard book={book} />
           </div>
