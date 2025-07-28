@@ -1,11 +1,14 @@
 "use client";
 
+import { useShops } from "@/features/shops/hook";
 import ShopCard from "./ShopCard";
 import { shops } from "@/lib/data/shopsData";
 
 export default function ShopsSection() {
-  const previewShops = shops.slice(0, 4); // Faqat 4 ta do‘kon chiqaramiz
-
+const { data, isLoading, isError } = useShops({
+  limit:3,
+});
+const previewShops = data?.data?.result.slice(0,4)
   return (
     <section className="mt-8 mb-3 container">
       <div className="items-center justify-between mb-4">
@@ -16,7 +19,7 @@ export default function ShopsSection() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {previewShops.map((shop) => (
+        {previewShops?.map((shop:any) => (
           <ShopCard key={shop.id} shop={shop} />
         ))}
       </div>

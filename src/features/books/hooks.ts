@@ -8,9 +8,11 @@ export const useCategories = (limit: number, offset: number) => {
     queryFn: () => getCategories(limit, offset),
   });
 };
-export const useBooks = () => {
-  return useMutation({
-    mutationFn: (body: BookListPayload) => getBookList(body),
+export const useBooks = (params: BookListPayload) => {
+  return useQuery({
+    queryKey: ["books", params],
+    queryFn: () => getBookList(params),
+    enabled: !!params, // params bo‘lsa so‘rov yuboriladi
   });
 };
 
