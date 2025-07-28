@@ -20,6 +20,9 @@ export interface BookListPayload {
 }
 export const getBookList = (params: BookListPayload) =>
   api.get("/book/list", { params }); 
+export const getBooksById = (id: number) =>
+  api.get(`/book/${id}`);
+
 export const getCategories = (limit: number, offset: number) =>
   api.get("/book/categories/", {
     params: {
@@ -27,5 +30,6 @@ export const getCategories = (limit: number, offset: number) =>
       offset,
     },
   });
+
 
 
