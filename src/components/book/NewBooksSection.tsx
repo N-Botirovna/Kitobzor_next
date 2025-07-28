@@ -95,11 +95,20 @@ const newBooks = data?.data?.result;
 
       {/* Slider */}
       <div ref={sliderRef} className="keen-slider">
-        {newBooks?.map((book:any) => (
-          <div key={book.id} className="keen-slider__slide">
-            <BookCard book={book} />
-          </div>
-        ))}
+        {newBooks?.length > 0 ? (
+  <div ref={sliderRef} className="keen-slider">
+    {newBooks.map((book: any) => (
+      <div key={book.id} className="keen-slider__slide">
+        <BookCard book={book} />
+      </div>
+    ))}
+  </div>
+) : (
+  <p className="text-center text-slate-500">
+    Yangi kitoblar hozircha mavjud emas.
+  </p>
+)}
+
       </div>
       <div className="mt-8 text-center">
         <a
