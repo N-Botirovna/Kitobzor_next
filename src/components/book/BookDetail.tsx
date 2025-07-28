@@ -7,7 +7,7 @@ export default function BookDetail({ book }: { book: Book }) {
     <div className="space-y-6 container ">
       <div className="flex flex-col md:flex-row gap-8">
         <img
-          src={book.image}
+          src={book.picture}
           alt={book.name}
           className="w-full md:w-1/3 h-auto rounded-lg object-cover"
         />

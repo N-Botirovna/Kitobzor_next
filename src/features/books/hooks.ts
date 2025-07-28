@@ -1,6 +1,6 @@
 // features/book/hooks/useCategories.ts
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { BookListPayload, getBookList, getCategories } from "./api";
+import { BookListPayload, getBookList, getBooksById, getCategories } from "./api";
 
 export const useCategories = (limit: number, offset: number) => {
   return useQuery({
@@ -15,4 +15,10 @@ export const useBooks = (params: BookListPayload) => {
     enabled: !!params, // params bo‘lsa so‘rov yuboriladi
   });
 };
-
+export const useBooksByID = (id: number) => {
+  return useQuery({
+    queryKey: ["book-id", id],
+    queryFn: () => getBooksById(id),
+    enabled: !!id,
+  });
+};
