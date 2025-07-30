@@ -1,3 +1,4 @@
+import client from "@/lib/axios/client";
 import api from "@/shared/api/axiosInstance";
 
 export interface ShopListPayload {
@@ -16,4 +17,4 @@ export interface ShopListPayload {
 }
 
 export const getShopList = (params: ShopListPayload) =>
-  api.get("/shop/list", { params });
+  client.get("/shop/list", { params });

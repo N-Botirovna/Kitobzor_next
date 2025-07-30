@@ -8,16 +8,15 @@ import NewBooksSection from "@/components/book/NewBooksSection";
 import FaqSection from "@/components/faq/FaqSection";
 import Posts from "@/components/posts/Posts";
 import ShopsSection from "@/components/shop/ShopSection";
+import { getCookie } from "cookies-next"; // ✅
 
 export default function Home() {
   const router = useRouter();
-
   const [isLoading, setIsLoading] = useState(true);
-// if(true) {return null}
+
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    console.log(!!token);
-    
+    const token = getCookie("token"); // ✅
+
     if (!token) {
       router.push("/login");
     } else {
@@ -25,7 +24,7 @@ export default function Home() {
     }
   }, [router]);
 
-  if (isLoading) return null; // yoki loading spinner, yoki <p>Checking...</p>
+  if (isLoading) return null;
 
   return (
     <div className="mt-5">
@@ -38,10 +37,3 @@ export default function Home() {
     </div>
   );
 }
-
-
-
-
- 
-
-

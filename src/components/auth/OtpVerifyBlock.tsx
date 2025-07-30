@@ -5,15 +5,16 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
+import { setCookie } from "cookies-next"
 
 export function OtpVerifyBlock() {
   const { phone } = useAuthStore()
   const [code, setCode] = useState("")
 
   async function handleVerify() {
-    // TODO: Kodni tekshirish va token olish
     const token = "FAKE_TOKEN"
-    localStorage.setItem("token", token)
+    setCookie("token", token)
+
     alert("Kirish muvaffaqiyatli")
   }
 

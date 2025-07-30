@@ -7,6 +7,8 @@ import TagHeader from "./header/HeaderCategories"
 import NavbarHeader from "./header/NavbarHeader"
 import TopHeader from "./header/TopHeader"
 import { ThemeProvider } from "./theme-provider"
+import { cookies } from "next/headers"
+import { getCookie } from "cookies-next"
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -16,7 +18,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    const token = localStorage.getItem("token")
+    const token = getCookie("token")
     console.log("Token mavjud:", !!token)
 
     if (!token && pathname !== "/login") {

@@ -24,13 +24,13 @@ export default function BookCard({ book }: { book: Book }) {
           </div>
 
           <div className="mt-3">
-            {book.discountPrice ? (
+            {book.discount_price ? (
               <div className="flex gap-2 items-center">
                 <span className="line-through text-sm text-muted-foreground">
                   {book.price} so'm
                 </span>
                 <span className="text-primary font-bold">
-                  {book.discountPrice} so'm
+                  {book.discount_price} so'm
                 </span>
               </div>
             ) : (

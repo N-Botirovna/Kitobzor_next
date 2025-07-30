@@ -1,5 +1,5 @@
 "use client";
-
+import { setCookie } from "cookies-next";
 import { useState } from "react";
 import { useVerifyCode } from "@/features/auth/hooks";
 import { useRouter } from "../../../node_modules/next/navigation";
@@ -62,7 +62,7 @@ const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) 
           console.log("Login success! Response data:", data);
 
           if (data?.data?.access_token) {
-            localStorage.setItem("token", data.data.access_token);
+            setCookie("token", data.data.access_token, { maxAge: 60 * 60 * 24 });
             router.push("/");
           }
         },
