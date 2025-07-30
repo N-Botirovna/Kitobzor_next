@@ -16,10 +16,10 @@ export default function BookDetail({ book }: { book: Book }) {
           <p className="text-lg text-muted-foreground">{book.author}</p>
           
           <div className="flex items-center gap-4">
-            {book.discountPrice ? (
+            {book.discount_price ? (
               <>
                 <span className="text-2xl font-bold text-primary">
-                  {book.discountPrice} so'm
+                  {book.discount_price} so'm
                 </span>
                 <span className="text-lg line-through text-muted-foreground">
                   {book.price} so'm

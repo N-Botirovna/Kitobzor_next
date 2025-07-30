@@ -1,3 +1,4 @@
+import client from "@/lib/axios/client";
 import api from "@/shared/api/axiosInstance";
 export interface BookListPayload {
   amount_max?: number;
@@ -19,12 +20,12 @@ export interface BookListPayload {
   type?: "gift" | "exchange" | "seller";
 }
 export const getBookList = (params: BookListPayload) =>
-  api.get("/book/list", { params }); 
+  client.get("/book/list", { params }); 
 export const getBooksById = (id: number) =>
   api.get(`/book/${id}`);
 
 export const getCategories = (limit: number, offset: number) =>
-  api.get("/book/categories/", {
+  client.get("/book/categories/", {
     params: {
       limit,
       offset,

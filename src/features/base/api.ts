@@ -1,3 +1,4 @@
+import client from "@/lib/axios/client";
 import api from "@/shared/api/axiosInstance";
 export interface CommentsQuery {
   book?: number;
@@ -12,16 +13,16 @@ export interface CommentsQuery {
 }
 
 export const getBanners = (limit: number, offset: number) =>
-  api.get("/base/banners/", {
+  client.get("/base/banners/", {
     params: {
       limit,
       offset,
     },
   });
 export const getBookCommentList = (params: CommentsQuery) =>
-  api.get("/book/comment/list", { params }); 
+  client.get("/book/comment/list", { params }); 
 export const getFAQ = (limit: number, offset: number) =>
-  api.get("/base/faqs/", {
+  client.get("/base/faqs/", {
     params: {
       limit,
       offset,
